@@ -12,9 +12,10 @@ export default class Plugin {
         }
         var timer = setInterval(() => {
             var input = document.getElementById('searchBox');
-            if (input[0]) {
-                clearInterval(timer);
+            if (!input) {
+                return;
             }
+            clearInterval(timer);
             var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
             nativeInputValueSetter.call(input, q);
             var ev2 = new Event('input', {bubbles: true});
