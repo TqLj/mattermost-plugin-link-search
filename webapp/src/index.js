@@ -10,14 +10,19 @@ export default class Plugin {
         if (!q) {
             return;
         }
-        var input = document.getElementById('searchBox');
-        var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
-        nativeInputValueSetter.call(input, q);
-        var ev2 = new Event('input', {bubbles: true});
-        input.dispatchEvent(ev2);
-        input.focus();
-        $('.search__form')[0].requestSubmit();
-        $('.sidebar--right__expand')[0].click();
+        var timer = setInterval(() => {
+            var input = document.getElementById('searchBox');
+            if (input[0]) {
+                clearInterval(timer);
+            }
+            var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+            nativeInputValueSetter.call(input, q);
+            var ev2 = new Event('input', {bubbles: true});
+            input.dispatchEvent(ev2);
+            input.focus();
+            $('.search__form')[0].requestSubmit();
+            $('.sidebar--right__expand')[0].click();
+        }, 200);
     }
 }
 
